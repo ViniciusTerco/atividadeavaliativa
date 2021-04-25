@@ -2,9 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AtividadeAvaliativa.Data;
+using AtividadeAvaliativa.Models.Atividade;
+using AtividadeAvaliativa.Models.Teste;
+using Buffet.Models.Acesso;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +29,20 @@ namespace AtividadeAvaliativa
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<DataBaseContext>(optionsAction: option => option.UseMySql(Configuration.GetConnectionString(name:"BuffetDb1")));
+            services.AddTransient<AcessoService>();
+            services.AddTransient<TesteService>();
+            services.AddIdentity<Usuario, Papel>(optinos =>
+                {
+                    optinos.User.RequireUniqueEmail = true;
+                    optinos.Password.RequiredLength = 8;
+                
+                })
+                .AddEntityFrameworkStores<DataBaseContext>();
+            services.ConfigureApplicationCookie(option =>
+            {
+                option.LoginPath = "/Acesso/login";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +70,11 @@ namespace AtividadeAvaliativa
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Acesso}/{action=Login}/{id?}");
+                
+                endpoints.MapControllerRoute(
+                    name: "admin",
+                    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

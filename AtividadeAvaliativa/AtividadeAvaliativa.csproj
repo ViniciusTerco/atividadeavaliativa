@@ -26,9 +26,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Models\Atividade" />
-      <Folder Include="ViewModel" />
-      <Folder Include="Views\Sistema" />
+      <Folder Include="Views\Admin\PainelDoUsuario" />
+      <Folder Include="Views\Admin\Supervisao" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.13" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.13" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.13">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
     </ItemGroup>
 
 </Project>
