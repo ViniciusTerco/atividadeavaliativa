@@ -1,0 +1,88 @@
+﻿@model AtividadeAvaliativa.ViewModel.Admin.IndexViewModel
+@{
+  ViewData["Title"] = "Seção teste";
+}
+<div class="row">
+  <div class="col">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h2>Formulário de Teste de Campos</h2>
+      </div>
+      <div class="card-body">
+        @if (@Model.FormMensagemSucesso != null)
+        {
+          <p class="alert alert-success alert-dismissible">
+            @Model.FormMensagemSucesso
+          </p>
+        }
+        
+        @if (@Model.FormMensagensErro != null)
+        {
+          <ul class="alert alert-danger">
+            @foreach (var msgErro in @Model.FormMensagensErro)
+            {
+              <li>@msgErro</li>
+            }
+          </ul>
+        }
+        <form action="@Url.RouteUrl("Admin", values:new {Controller = "SecaoTeste" })" method="post">
+          <div class="form-control">
+            <label for="txtCompoTexto">Campo Texto</label>
+            <input type="text" id="txtCampoTexto" name="txtCampoTexto" class="form-control"></input>
+          </div>
+          <div class="form-control">
+            <label for="txtCompoData">Campo Data</label>
+            <input type="text" id="txtCampoData" name="txtCampoData" class="form-control"></input>
+          </div>
+          <div class="form-control">
+            <label for="cmbCampoSelect">Campo Select</label>
+            <select id="cmbCampoSelect" name="cmbCampoSelect" class="form-control">
+              <option value="">Selecione</option>
+              <option value="1">Valor 1</option>
+              <option value="2">Valor 2</option>
+              <option value="3">Valor 3</option>
+            </select>
+          </div>
+          <div class="form-control form-check">
+            <input type="checkbox" id="cbxCampoCheckBox" name="cbxCampoCheckBox" value="Valor Campo Checkbox"
+                   class="form-check-input"/>
+            <label class="form-check-label" for="cbxCampoCheckBox">Campo Check Box</label>
+          </div>
+          <div class="form-control form-check">
+            <input type="checkbox" id="cbxCampoCheckBoxSemValue" name="cbxCampoCheckBoxSemValue" 
+                   class="form-check-input"/>
+            <label class="form-check-label" for="cbxCampoCheckBoxSemValue">Campo Check Box Sem Value</label>
+          </div>
+          <div class="form-control form-check">
+            <div class="form-check">
+              <input type="radio" id="rdbCampoRadio1" name="rdbCampoRadio1" value="Radio 01" 
+                     class="form-check-input"/>
+              <label class="form-check-label" for="rdbCampoRadio1">Campo Radio 1</label>
+            </div>
+          </div>
+          <div class="form-control form-check">
+            <div class="form-check">
+              <input type="radio" id="rdbCampoRadio2" name="rdbCampoRadio2" value="Radio 02" 
+                     class="form-check-input"/>
+              <label class="form-check-label" for="rdbCampoRadio2">Campo Radio 2</label>
+            </div>
+          </div>
+          <div class="form-control form-check">
+            <div class="form-check">
+              <input type="radio" id="rdbCampoRadio3" name="rdbCampoRadio3" value="Radio 03" 
+                     class="form-check-input"/>
+              <label class="form-check-label" for="rdbCampoRadio3">Campo Radio 3</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="txtCampoTextArea">Campo Text Área</label>
+            <textarea id="txtCampoTextArea" name="txtCampoTextArea" class="form-control"></textarea>
+          </div>
+          <div class="form-group">
+            <input type="submit" value="Enviar" class="bnt btn-primary">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -26,11 +26,12 @@ namespace AtividadeAvaliativa.Controllers
             _usuarioService = usuarioService;
         }
 
-       
+       /*
         public IActionResult Principal()
         {
             return View();
         }
+       */
        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
