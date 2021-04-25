@@ -4,7 +4,7 @@ namespace AtividadeAvaliativa.Controllers
 {
     public class InformacoesLegaisController : Controller
     {
-        // GET
+        
         public IActionResult TermoDeUso()
         {
             return View();
