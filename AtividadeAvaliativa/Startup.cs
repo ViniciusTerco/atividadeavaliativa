@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AtividadeAvaliativa.Data;
 using AtividadeAvaliativa.Models.Atividade;
+using AtividadeAvaliativa.Models.Cliente;
 using AtividadeAvaliativa.Models.Teste;
 using Buffet.Models.Acesso;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,7 @@ namespace AtividadeAvaliativa
             services.AddDbContext<DataBaseContext>(optionsAction: option => option.UseMySql(Configuration.GetConnectionString(name:"BuffetDb1")));
             services.AddTransient<AcessoService>();
             services.AddTransient<TesteService>();
+            services.AddTransient<ClienteService>();
             services.AddIdentity<Usuario, Papel>(optinos =>
                 {
                     optinos.User.RequireUniqueEmail = true;

@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using AtividadeAvaliativa.Models.Cliente;
 using AtividadeAvaliativa.Models.Teste;
 using AtividadeAvaliativa.RequestModels.Admin.SecaoTeste;
 using AtividadeAvaliativa.ViewModel.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 
 namespace AtividadeAvaliativa.Controllers.Admin
 {
@@ -13,19 +15,52 @@ namespace AtividadeAvaliativa.Controllers.Admin
     {
 
         private readonly TesteService _testeService;
+        private readonly ClienteService _clienteService;
 
-        public SecaoTesteController(TesteService testeService)
+        public SecaoTesteController(TesteService testeService, ClienteService clienteService)
         {
             _testeService = testeService;
+            _clienteService = clienteService;
         }
         
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(FiltroListagemClientes request)
         {
             var viewmodel = new IndexViewModel()
             {
                 FormMensagemSucesso = (string) TempData["formMensagemSucesso"],
                 FormMensagensErro = (string[]) TempData["formMensagensErro"]
+            };
+            
+            //Obter Listagem de Clientes com filtro
+
+            var filtroNome = request.nome;
+            var filtroEmail = request.email;
+            var filtroApenasComEvento = request.apenasComEvento;
+
+            var clientes = _clienteService.ObterClientesComFiltro(filtroNome, filtroEmail, filtroApenasComEvento);
+            
+            //Inserir lista de clientes na viewModel
+
+            foreach (var cliente in clientes)
+            {
+                viewmodel.ListaCliente.Add(new IndexViewModel.Cliente()
+                {
+                    Id = cliente.Id.ToString(),
+                    Nome = cliente.nome,
+                    Email = cliente.email,
+                    QtdEventos = cliente.Eventos.Count.ToString(),
+                });
+            }
+            
+            //Inserir filtros na viewmodel
+
+            viewmodel.Filtro = new IndexViewModel.Filtros()
+            {
+                Nome = filtroNome,
+                Email = filtroEmail,
+                ApenasComEventos = filtroApenasComEvento,
+
             };
             
             return View(NomeDaView(), viewmodel);

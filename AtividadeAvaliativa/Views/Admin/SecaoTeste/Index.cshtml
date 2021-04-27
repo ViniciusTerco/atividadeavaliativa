@@ -84,5 +84,69 @@
         </form>
       </div>
     </div>
+    
+    <div class="card mb-3">
+      <div class="card-header">
+        <h2>Listagem de Dados</h2>
+      </div>
+      <div class="card-body">
+        <span>
+          <strong>Filtros: </strong>
+        </span>
+        <form action="@Url.RouteUrl("Admin", new {controller = "SecaoTeste"})" method="get">
+          <div class="form-row align-items-center">
+            <div class="col-auto">
+              <label for="filtroNome">Nome</label>
+              <input type="text" class="form-control mb-2" id="filtroNome" name="filtroNome" value="@Model.Filtro.Nome">
+            </div>
+            <div class="col-auto">
+              <label for="filtroEmail">Email</label>
+              <input type="text" class="form-control mb-2" id="filtroEmail" name="filtroEmail" value="@Model.Filtro.Email">
+            </div>
+            <div class="col-auto">
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" @(@Model.Filtro.ApenasComEventos ? Html.Raw("checked") : Html.Raw(""))
+                       id="filtroApenasComEventos" name="filtroApenasComEventos" value="true">
+                <label class="form-check-label" for="filtroApenasComEventos">Apenas clientes com Eventos</label>
+              </div>
+            </div>
+          </div>
+        </form>
+        <hr/>
+        @if (@Model.ListaCliente.Count > 0)
+        {
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Quantidade de Eventos</th>
+              <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var cliente in @Model.ListaCliente)
+            {
+              <tr>
+                <td>@cliente.Id</td>
+                <td>@cliente.Nome</td>
+                <td>@cliente.Email</td>
+                <td>@cliente.QtdEventos</td>
+                <td class="text-center">
+                  <a class="bnt btn-primary btn-sm" href="/Admin/SecaoTeste/Ver/@cliente.Id">Ver/Editar</a>
+                  <a class="bnt btn-primary btn-sm" href="/Admin/SecaoTeste/Remover /@cliente.Id">Remover</a>
+                </td>
+              </tr>
+            }
+            </tbody>
+          </table>
+        }
+        else
+        {
+          <p class="text-center">Nenhum Registro Foi Encontrado.</p>
+        }
+      </div>
+    </div>
   </div>
 </div>
